@@ -48,19 +48,21 @@ class HeaderDropdown extends Component {
   }
 
   Logout() {
-    var obj ={
-      usernameOrEmail:localStorage.getItem("LOGINID")
-    }
-    logoutRequest(obj)
-    .then(response => {
-      localStorage.clear();
-      window.location.href = '/sam';
-      
-    });
 
-  // localStorage.removeItem(ACCESS_TOKEN);
-   //localStorage.removeItem("loggedNav");
-   //localStorage.removeItem("username");
+    window.location.href = '/';
+    // var obj ={
+    //   usernameOrEmail:localStorage.getItem("LOGINID")
+    // }
+    // logoutRequest(obj)
+    // .then(response => {
+    //   localStorage.clear();
+    //   window.location.href = '/';
+      
+    // });
+
+   localStorage.removeItem(ACCESS_TOKEN);
+   localStorage.removeItem("loggedNav");
+   localStorage.removeItem("username");
   
   }
 

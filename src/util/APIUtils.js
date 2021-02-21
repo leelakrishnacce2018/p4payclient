@@ -1135,6 +1135,26 @@ export function getUserList() {
         
     });
 }
+export function getUsersByFilter(filter) {
+      
+
+    return request({
+        url: API_BASE_URL + "/user/bykycstatus",
+        method: 'POST',        
+        body: JSON.stringify(filter)
+    });
+}
+
+export function approveUser(obj) {
+      
+
+    return request({
+        url: API_BASE_URL + "/user/approveKycStatus",
+        method: 'POST',        
+        body: JSON.stringify(obj)
+    });
+}
+
 export function getInactiveUserList() {
      
 

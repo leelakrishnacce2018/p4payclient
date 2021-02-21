@@ -3,7 +3,7 @@ import {Card, CardHeader, CardBody,Button} from 'reactstrap';
 import {BootstrapTable, TableHeaderColumn,ButtonToolbar} from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 //import SweetAlert from 'react-bootstrap-sweetalert';
-import {  deactiveRecord, updateBu, createBu, getActiveList, getDelBuList, getUserList,getInactiveUserList,deactiveUser,createUser,updateuser } from './../../util/APIUtils';
+import {  deactiveRecord, updateBu, createBu, getActiveList, getDelBuList, getUserList,getInactiveUserList,deactiveUser,createUser,updateuser, getUsersByFilter, approveUser } from './../../util/APIUtils';
 import { Modal, ModalHeader, ModalBody, ModalFooter,Input,
   Form, FormGroup,
   Label,UncontrolledTooltip } from 'reactstrap';
@@ -17,6 +17,9 @@ import Loader from 'react-loaders'
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import 'loaders.css/loaders.min.css';
+import { NavLink } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
+import { NavItem } from 'react-bootstrap';
 
 
 
@@ -49,6 +52,7 @@ class User extends Component {
     this.togglePrimary = this.togglePrimary.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.doParentToggle = this.doParentToggle.bind(this);
+    this.onFilterChange = this.onFilterChange.bind(this);
     
     
     
@@ -64,6 +68,25 @@ class User extends Component {
       withFirstAndLast: true
     }
 
+  }
+
+  onFilterChange(){
+    var e = document.getElementById("selectUsers");
+
+    this.setState({ loading: true })
+
+    var obj = {
+      kycStatus :e.value
+    }
+    getUsersByFilter(obj)
+    .then(response => {
+       // console.log(response.activelist);
+      this.setState({
+        data: response.activelist,
+        loading:false
+      });
+    });
+   
   }
 
   toggle() {
@@ -118,9 +141,13 @@ class User extends Component {
 
    getActiveList(){
     this.setState({ loading: true })
-    getUserList()
+
+    var obj = {
+      kycStatus :'W'
+    }
+    getUsersByFilter(obj)
     .then(response => {
-        console.log(response.activelist);
+       // console.log(response.activelist);
       this.setState({
         data: response.activelist,
         loading:false
@@ -141,6 +168,10 @@ class User extends Component {
     });
    }
 
+   showAddress(cell,row){
+   
+     return row.address ? row.address.address+"\n"+row.address.city+"\n"+row.address.state:'';
+   }
    
 
   cellButton(cell, row, enumObject, rowIndex) {
@@ -148,11 +179,13 @@ class User extends Component {
       <span>
       {row.rstatus == '1' ? (
         <div>
+         
       <button className="btn btn-danger" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Disable The Item?')){this.deleteRow(row)}}}><i className="fa fa-trash"></i></button>
       <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Disable</UncontrolledTooltip> 
       <button className="btn btn-warning"  id={"edit"+rowIndex}  onClick={(e) => this.handleClickEdit(row)}><i className="fa fa-edit"></i></button>
     
     <UncontrolledTooltip placement="right" target={"edit"+rowIndex}>Edit</UncontrolledTooltip>
+    
       </div>
   ) : (
     <div>
@@ -179,7 +212,10 @@ class User extends Component {
 
     
   }
+  approveRecord(record){
 
+    console.log("view kyc");
+  }
   
 
   handleClickEdit(record) {  
@@ -294,7 +330,7 @@ class User extends Component {
       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} closeButton={false}/>    
         <Card>
           <CardHeader>
-            <i className="icon-menu"></i>User Privileges
+            <i className="icon-menu"></i>Users
             <div className="card-actions">
              
             </div>
@@ -302,10 +338,18 @@ class User extends Component {
           <CardBody>
          
           
-          <Button className="btn btn-danger" onClick={this.handleClick} id="ADD">ADD</Button>
-          <UncontrolledTooltip placement="top" target="ADD">ADD</UncontrolledTooltip>
+          {/* <Button className="btn btn-danger" onClick={this.handleClick} id="ADD">ADD</Button>
+          <UncontrolledTooltip placement="top" target="ADD">ADD</UncontrolledTooltip> */}
           <Button className="btn btn-info" onClick={this.showDeletedRecords.bind(this)} id="rList">{this.state.recordsListName}</Button>
           <UncontrolledTooltip placement="top" target="rList">{this.state.recordsListName}</UncontrolledTooltip>
+          <select id='selectUsers' onChange={this.onFilterChange} style={{marginLeft:'10px',color:'#151b1e',backgroundColor:'#22f58f',borderColor:'#22f58f',display:'inline-block',marginBottom:'10px',border:'1px solid transparent',borderRadius:'0.25rem',lineHeight:'1.5',padding:'0.375rem 0.75rem',textAlign:'center',verticalAlign:'middle'}}>
+            <option value="W">Approval Pending</option>
+            <option value="N">Upload Pending</option>
+            <option  value="R">Reject</option>
+            <option  value="A">Approved</option>
+          </select>
+
+          
           
 
           <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} keyboard={false} backdrop={false}>
@@ -329,12 +373,13 @@ class User extends Component {
             <TableHeaderColumn dataField="name" csvHeader='Full Name' filter={ { type: 'TextFilter', delay: 1000 } } dataSort  tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >Name</TableHeaderColumn> 
             <TableHeaderColumn dataField="mobileNumber" csvHeader='Mobile' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Mobile</TableHeaderColumn>  
             <TableHeaderColumn dataField="email" csvHeader='Email' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Email</TableHeaderColumn>  
-            <TableHeaderColumn dataField="kycApproved" csvHeader='KYC Status' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >KYC</TableHeaderColumn>  
+            <TableHeaderColumn dataField="kycStatus" csvHeader='KYC Status' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >KYC</TableHeaderColumn>  
 
-            <TableHeaderColumn dataField="otp" csvHeader='OTP' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >OTP</TableHeaderColumn>  
-            <TableHeaderColumn dataField="otpStatus" csvHeader='OTP Status' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >OTP Status</TableHeaderColumn> 
-            <TableHeaderColumn dataField="role" csvHeader='Role' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Role</TableHeaderColumn> 
-            <TableHeaderColumn dataField='button'  dataFormat={this.cellButton.bind(this)} hiddenOnInsert  export={false}>Actions</TableHeaderColumn>
+            <TableHeaderColumn dataField="otpVerified" csvHeader='OTP Status' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >OTP</TableHeaderColumn> 
+            <TableHeaderColumn dataField="mpin" csvHeader='MPIN' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >MPIN</TableHeaderColumn>   
+            <TableHeaderColumn dataField="address" dataFormat={this.showAddress.bind(this)} csvHeader='Address' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Address</TableHeaderColumn>   
+             <TableHeaderColumn dataField="role" csvHeader='Role' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Role</TableHeaderColumn> 
+            <TableHeaderColumn dataField='button'  dataFormat={this.cellButton.bind(this)}  hiddenOnInsert  export={false}>Actions</TableHeaderColumn>
             </BootstrapTable>
           </CardBody>
         </Card> 
@@ -352,13 +397,18 @@ class CustModal extends Component {
       this.apiservice =new APIsService();
       this.state = {        
         buId: '',
-        buName:'U',
+        buName:'',
         sbuId:'0',
         sbuList:[],
         borderColor:defaultboarder,
         borderColorsbu:defaultboarder,
         pasteAction:false,
-        recordsListName:"Get Disable Records"      
+        recordsListName:"Get Disable Records",
+        name:"",
+        panImg:"",
+        selfiImg:"",
+        kycStatus:""
+       
       };
 
       this.onBuName = this.onBuName.bind(this);
@@ -372,6 +422,7 @@ class CustModal extends Component {
 
       this.blurFirstName = this.blurFirstName.bind(this);
       this.blurLastName = this.blurLastName.bind(this);
+      this.OnKycStatus =this.OnKycStatus.bind(this);
 
       
       
@@ -388,6 +439,13 @@ class CustModal extends Component {
         pasteAction: true
        });
      }
+
+     OnKycStatus(e) {
+      //console.log("on sbu"+e.value);
+      this.setState({
+        kycStatus: e.target.value
+      });
+    }
  
     
 
@@ -447,6 +505,9 @@ class CustModal extends Component {
             buName: this.props.inputrecord.exRole,
             buId: this.props.inputrecord.id,
             sbuId: this.props.inputrecord.interRole,
+            panImg:this.props.inputrecord.panStr,
+            selfiImg:this.props.inputrecord.selfyStr,
+            name:this.props.inputrecord.name
         });
         
    }else{
@@ -608,22 +669,18 @@ class CustModal extends Component {
 
 
     onUpdate(){
+
+      var e = document.getElementById("selectUsers");
       var obj = {
-        exRole: this.state.buName.trim(), //login id
-        interRole: this.state.sbuId,      //user role
-        id:this.state.buId,
-        firstName:this.state.firstName,
-        lastName:this.state.lastName,
-         
+        remarks: this.state.buName.trim(), //login id
+        kycStatus: this.state.kycStatus.trim(),      //user role
+        id:this.state.buId
       };    
 
-        if(!this.formValidate(obj)){
-          // console.log("hello");
-          event.preventDefault(); 
-          return false;  
-          }
-     // console.log("Update Method Clicked");        
-     updateuser(obj)
+        
+     // console.log("Update Method Clicked");   
+     // console.log(obj);         
+     approveUser(obj)
       .then(response => {               
         // console.log("rsponse"+response); 
         toast.dismiss()
@@ -668,14 +725,7 @@ class CustModal extends Component {
     
     
 getActiverecords(){
-  getActiveList()
-  .then(response => {
-      //console.log(response);
-    this.setState({
-      sbuList: response.activelist
-    });
-  });
-
+ 
 }
   
     render() {
@@ -688,40 +738,53 @@ getActiverecords(){
         <Card>
           
               <CardHeader className="carheaderSmall">
-                <strong>User Privileges</strong> 
+                <strong>Users</strong> 
               </CardHeader>
               <CardBody>
-                <FormGroup>
-                    <Input type="text"  value={this.state.buId}  hidden/>                   
-                  </FormGroup> 
-                  <FormGroup>
-                    <Label htmlFor="nf-email">Name<span style={{color:'red'}}>*</span></Label>
-                    <Input type="text" placeholder="Name" style ={this.state.borderColor}   value={this.state.buName} onPaste ={this.onPaste}   onChange={this.onBuName}   onBlur = {this.blurBuname}/>
-                    <span id="ctryError"></span>
-                  </FormGroup> 
-                  <FormGroup>
-                    <Label htmlFor="nf-email">Mobile<span style={{color:'red'}}>*</span></Label>
-                    <Input type="text" placeholder="Mobile"  id="firstName" maxLength ="50" minLength ="1" value={this.state.firstName}   onChange={this.onFirstName}   onBlur = {this.blurFirstName}/>
-                    <span id="firstNameError"></span>
-                  </FormGroup>
-                  <FormGroup>
-                    <Label htmlFor="nf-email">Email<span style={{color:'red'}}>*</span></Label>
-                    <Input type="text" placeholder="Email"  id="lastName" maxLength ="50" minLength ="1" value={this.state.lastName}    onChange={this.onLastName}   onBlur = {this.blurLastName}/>
-                    <span id="lastNameError"></span>
-                  </FormGroup>
-                  <FormGroup>  
-                  <Label htmlFor="nf-email">User Role<span style={{color:'red'}}>*</span></Label>                     
-                      <Input type="select" name="select" style ={this.state.borderColorsbu}  id="select" value={this.state.sbuId} onChange={this.onSbuId}   onBlur = {this.blurSbuId}>
-                        <option value="0">Please Select</option>
-                        <option value="ROLE_ADMIN">Administrator</option>
-                        <option value="ROLE_USER">USER</option>
-                        <option value="ROLE_SUPERUSER">Super User</option>
-                       
-                      </Input>
-                      <span id="sbuError"></span>           
-                  </FormGroup>              
-              </CardBody>     
-             
+              <form>
+                  <div className="form-group row">
+                     <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Name</label>
+                  <div className="col-sm-8">
+                     <input type="text" readOnly className="form-control-plaintext" id="staticEmail" value={this.state.name}/>
+                   </div>
+                   </div>
+                          <div className="form-group row">
+                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">Pancard</label>
+                            <div className="col-sm-8">
+                            <a download="FILENAME.png" href={"data:image/png;base64,"+this.state.panImg}>Download</a>
+                            </div>
+                          </div>
+                          <div className="form-group row">
+                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">Selfi Pic</label>
+                            <div className="col-sm-8">
+                            <a download="FILENAME.png" href={"data:image/png;base64,"+this.state.selfiImg}>Download</a>
+                            </div>
+                          </div>
+                          <div className="form-group row">
+                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">KYC Status</label>
+                            <div className="col-sm-8">
+                            <Input
+                                      type="select"
+                                      name="select"
+                                      id="kycStatus"
+                                      value={this.state.cunId}
+                                      onChange={this.OnKycStatus}
+                                    >
+                                      <option value="R">Reject</option>
+                                      <option value="A">Approve</option>
+              
+            </Input>
+                            </div>
+                          </div>
+                          <div className="form-group row">
+                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">Remarks</label>
+                            <div className="col-sm-8">
+                            <input type="text" id='remarks' className="form-control"  onChange={this.onBuName} value={this.state.buName}/>
+                            </div>
+                          </div>
+                        </form>
+
+             </CardBody>
             </Card>
             </Form>
       );

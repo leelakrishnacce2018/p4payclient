@@ -325,7 +325,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     
-    this.getActiveList();
+   // this.getActiveList();
   }
 
   getActiveList(){
@@ -429,7 +429,7 @@ class Dashboard extends Component {
                   </ButtonDropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key ='1'>{item.cCount}</div>))}</h4>
-                <p>Country </p>
+                <p>Users </p>
               </CardBody>
               <div className="chart-wrapper px-3" style={{ height: '70px' }}>
                 {//<Line data={cardChartData1} options={cardChartOpts1} height={70} />
@@ -456,7 +456,7 @@ class Dashboard extends Component {
                   </Dropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.sbuCount}</div>))}</h4>
-                <p>SBU</p>
+                <p>TransActions</p>
               </CardBody>
               <div className="chart-wrapper px-0" style={{ height: '70px' }}>
                {// <Line data={cardChartData3} options={cardChartOpts3} height={70} />
@@ -481,7 +481,7 @@ class Dashboard extends Component {
                   </ButtonDropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.buCount}</div>))}</h4>
-                <p>BU</p>
+                <p>Failed TransActions</p>
               </CardBody>
               <div className="chart-wrapper px-3" style={{ height: '70px' }}>
                {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
@@ -507,113 +507,7 @@ class Dashboard extends Component {
                   </ButtonDropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.titlesCount}</div>))}</h4>
-                <p>HR Role</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
-
-              <Col xs="12" sm="6" lg="3"  key='11' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id='card5' isOpen={this.state.card11}
-                    toggle={() => { this.setState({ card11: !this.state.card11 }); }}>
-                    <DropdownToggle className="p-0 dropdown-toggle" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewApplications}>View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClickApp}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/appname.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.appCount}</div>))}</h4>
-                <p>Application</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-               }</div>
-              </Card> 
-          </Col>
-
-
-          <Col xs="12" sm="6" lg="3"  key='7' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card7' isOpen={this.state.card7}
-                    toggle={() => { this.setState({ card7: !this.state.card7 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewfunctions} >View</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/appFunctionDetailsFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.funsCount}</div>))}</h4>
-                <p>App Function Details</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
-              
-             { /*<Col xs="12" sm="6" lg="3"  key='5' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id='card5' isOpen={this.state.card5}
-                    toggle={() => { this.setState({ card5: !this.state.card5 }); }}>
-                    <DropdownToggle className="p-0 dropdown-toggle" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewApplications}>View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClick2}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/samDetailsFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.appCount}</div>))}</h4>
-                <p>SAM Details</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-               }</div>
-              </Card> 
-          </Col>*/}
-
-
-
-          <Col xs="12" sm="6" lg="3"  key='6' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card6' isOpen={this.state.card6}
-                    toggle={() => { this.setState({ card6: !this.state.card6 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewRoles} >View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClick5}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/samRoleFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.rolsCount}</div>))}</h4>
-                <p>SAM Role</p>
+                <p>Pending Transactions</p>
               </CardBody>
               <div className="chart-wrapper px-3" style={{ height: '70px' }}>
                {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
@@ -623,59 +517,13 @@ class Dashboard extends Component {
 
               
 
-              <Col xs="12" sm="6" lg="3"  key='8' >
-            <Card className="text-white bg-danger">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card8' isOpen={this.state.card8}
-                    toggle={() => { this.setState({ card8: !this.state.card8 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewusers} >View</DropdownItem>
-                      <DropdownItem  onClick={this.showUsers}>Add</DropdownItem>
-                      
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.usersCount}</div>))}</h4>
-                <p>User Privileges</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
+          
 
-              <Col xs="12" sm="6" lg="3"  key='9' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card9' isOpen={this.state.card9}
-                    toggle={() => { this.setState({ card9: !this.state.card9 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                   {/* <DropdownItem onClick={this.viewSamdata} >View</DropdownItem>*/}
-                      <DropdownItem  tag="a" href="../Templates/samDataFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.samdatacount}</div>))}</h4>
-                <p>SAM Data</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
+          
+              
 
-
-
+              
+             
           
               </Row>  )  :
            null
@@ -741,6 +589,7 @@ class Dashboard extends Component {
   
     
   }
+
     return (
       <BlockUi tag="div" blocking={this.state.loading} loader={<Loader active type={loadertype} color="#8dc63f"/>} message={loaderMsg}>
       <div className="animated fadeIn">
@@ -752,28 +601,28 @@ class Dashboard extends Component {
           
        (  <Row >
           <Col xs="12" sm="6" lg="3"  key='1'>
-          <Card className="text-white bg-primary"   >
-          <CardBody className="pb-0">
+          <Card className="text-white bg-danger">
+              <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
-                <ButtonDropdown id='card1' isOpen={this.state.card1}
-                    toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
+                  <ButtonDropdown id='card8' isOpen={this.state.card8}
+                    toggle={() => { this.setState({ card8: !this.state.card8 }); }}>
                     <DropdownToggle caret className="p-0" color="transparent">
                       <i className="icon-settings"></i>
                     </DropdownToggle>
                     <DropdownMenu right>
-                    <DropdownItem  onClick={this.viewCountries}>View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClick}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/countryFormat.xlsx">Import Template</DropdownItem>
+                    <DropdownItem onClick={this.viewusers} >View</DropdownItem>
+                      <DropdownItem  onClick={this.showUsers}>Add</DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key ='1'>{item.cCount}</div>))}</h4>
-                <p>Country </p>
+                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.usersCount}</div>))}</h4>
+                <p>User Privileges</p>
               </CardBody>
               <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-                {//<Line data={cardChartData1} options={cardChartOpts1} height={70} />
-                }</div>
-              </Card>  
+               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
+               }</div>
+              </Card>
+            
           </Col>
 
           
@@ -789,13 +638,11 @@ class Dashboard extends Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem onClick={this.viewSbu}>View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClick4}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/sbuFormat.xlsx">Import Template</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.sbuCount}</div>))}</h4>
-                <p>SBU</p>
+                <p>Transactions</p>
               </CardBody>
               <div className="chart-wrapper px-0" style={{ height: '70px' }}>
                {// <Line data={cardChartData3} options={cardChartOpts3} height={70} />
@@ -814,13 +661,11 @@ class Dashboard extends Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                     <DropdownItem onClick={this.viewBu} >View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClick3}>Add</DropdownItem>
-                    
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.buCount}</div>))}</h4>
-                <p>BU</p>
+                <p>Pending Transactions</p>
               </CardBody>
               <div className="chart-wrapper px-3" style={{ height: '70px' }}>
                {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
@@ -840,13 +685,11 @@ class Dashboard extends Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                     <DropdownItem onClick={this.viewTitle} >View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClickTitle}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/hrRoleFormat.xlsx">Import Template</DropdownItem>
-                    </DropdownMenu>
+                  </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
                 <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.titlesCount}</div>))}</h4>
-                <p>HR Role</p>
+                <p>Failed Transactions</p>
               </CardBody>
               <div className="chart-wrapper px-3" style={{ height: '70px' }}>
                {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
@@ -856,186 +699,12 @@ class Dashboard extends Component {
 
 
               
-          { /*   <Col xs="12" sm="6" lg="3"  key='5' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id='card5' isOpen={this.state.card5}
-                    toggle={() => { this.setState({ card5: !this.state.card5 }); }}>
-                    <DropdownToggle className="p-0 dropdown-toggle" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewApplications}>View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClickApp}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/samDetailsFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.appname}</div>))}</h4>
-                <p>SAM Details</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-               }</div>
-              </Card> 
-          </Col>*/}
+        
 
-
-
-          <Col xs="12" sm="6" lg="3"  key='6' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card6' isOpen={this.state.card6}
-                    toggle={() => { this.setState({ card6: !this.state.card6 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewRoles} >View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClick5}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/samRoleFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.rolsCount}</div>))}</h4>
-                <p>SAM Role</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
-
-              <Col xs="12" sm="6" lg="3"  key='7' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card7' isOpen={this.state.card7}
-                    toggle={() => { this.setState({ card7: !this.state.card7 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewfunctions} >View</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/appFunctionDetailsFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.funsCount}</div>))}</h4>
-                <p>App Function Details</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
-
-              <Col xs="12" sm="6" lg="3"  key='8' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card8' isOpen={this.state.card8}
-                    toggle={() => { this.setState({ card8: !this.state.card8 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewusers} >View</DropdownItem>
-                      <DropdownItem  onClick={this.showUsers}>Add</DropdownItem>
-                      
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.usersCount}</div>))}</h4>
-                <p>User Privileges</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
-
-              <Col xs="12" sm="6" lg="3"  key='9' >
-            <Card className="text-white bg-success">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card9' isOpen={this.state.card9}
-                    toggle={() => { this.setState({ card9: !this.state.card9 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                   {/* <DropdownItem onClick={this.viewSamdata} >View</DropdownItem>*/}
-                      <DropdownItem  tag="a" href="../Templates/samDataFormat.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.samdatacount}</div>))}</h4>
-               
-                <p>SAM Data</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-               }</div>
-              </Card>
-              </Col> 
-
-
-
-          <Col xs="12" sm="6" lg="3"  key='10' >
-            <Card className="text-white bg-danger">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id='card10' isOpen={this.state.card10}
-                    toggle={() => { this.setState({ card10: !this.state.card10 }); }}>
-                    <DropdownToggle className="p-0 dropdown-toggle" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewUnApprovedList.bind(this)}>View</DropdownItem>            
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.unApprovesCount}</div>))}</h4>
-                <p>UnApproved List</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-               }</div>
-              </Card> 
-          </Col>
-          <Col xs="12" sm="6" lg="3"  key='11' >
-            <Card className="text-white bg-danger">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <Dropdown id='card5' isOpen={this.state.card11}
-                    toggle={() => { this.setState({ card11: !this.state.card11 }); }}>
-                    <DropdownToggle className="p-0 dropdown-toggle" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                    <DropdownItem onClick={this.viewApplications}>View</DropdownItem>
-                      <DropdownItem  onClick={this._onButtonClickApp}>Add</DropdownItem>
-                      <DropdownItem  tag="a" href="../Templates/appname.xlsx">Import Template</DropdownItem>
-                    
-                    </DropdownMenu>
-                  </Dropdown>
-                </ButtonGroup>
-                <h4 className="mb-0">{this.state.countList.map((item) => (<div key={1}>{item.appname}</div>))}</h4>
-                <p>Application</p>
-              </CardBody>
-              <div className="chart-wrapper px-3" style={{ height: '70px' }}>
-               {// <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-               }</div>
-              </Card> 
-          </Col>
+              
+                            
+          
+          
               </Row>  )  :
            null
         } 
@@ -1100,4 +769,4 @@ class Dashboard extends Component {
   }
 }
 
-export default withRouter(Dashboard);
+export default withRouter(Dashboard)

@@ -1,7 +1,7 @@
 
-//export const API_BASE_URL = 'http://localhost:8082/api';
+export const API_BASE_URL = 'http://localhost:8091/api';
 
-export const API_BASE_URL = location.protocol+'//'+location.host+'/api'
+//export const API_BASE_URL = location.protocol+'//'+location.host+'/api'
 
 
 //export const API_BASE_URL = 'http://192.168.0.97:8080/sam/api'

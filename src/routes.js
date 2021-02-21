@@ -6,7 +6,7 @@ const routes = {
   '/masters/country':'Country',
   '/masters/samsbu':'SBU',
   '/masters/sambu':'BU',
-  '/masters/user':'User Privileges',
+  '/masters/user':'Users',
   '/masters/samapp':'SAM Application',
   '/masters/roletitle':'HR Role',
   '/masters/samroles':'SAM Role',
