@@ -4,6 +4,7 @@ import { getLoginUser } from '../../../util/APIUtils';
 import { ACCESS_TOKEN, API_BASE_URL,onlyChrRegex, crole } from '../../../constants';
 import { withRouter } from 'react-router';
 import { ForOnlyuseName } from '../../../util/customValidations';
+import logo from './logo.png';
 
 
 import nav from '../../../components/Sidebar/_nav'
@@ -240,9 +241,12 @@ onSubmit(e)  {
                     </Row>                   
                   </CardBody>
                 </Card>
+
+                
                 <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
                   <CardBody className="text-center">
-                  
+                  <img src={'img/favicon1.png'} width="200" height="200"  />
+
                   </CardBody>
                 </Card>
               </CardGroup>

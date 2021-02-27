@@ -29,11 +29,11 @@ import SamBySbu from '../../components/SAM Functions/SamBySbu';
 import HistoryFilter from '../../components/SAM Functions/HistoryFilter';
 import TestApp from '../../components/SAM Functions/TestApp';
 import AppInfo from '../../components/SAM Functions/AppInfo';
-import SamSearch from '../../components/SAM Functions/Samsearch';
 import User from '../../components/SAM Functions/User';
 import MultiSelectReport from '../../components/SAM Functions/MultiSelectReport';
 import ApplicationName from '../../components/SAM Functions/ApplicationName';
 import RowExpand from '../../components/SAM Functions/RowExpand';
+import Transactions from '../../components/SAM Functions/Transactions';
 
 
 
@@ -73,7 +73,7 @@ class Full extends Component {
                 <Route path="/samdata" name="samdata" component={SamData2}/> 
                 <Route path="/approvesamdata" name="approvesamdata" component={ApproveSamdata}/> 
                 <Route path="/reports/AppsRoles" name="AppsVsRoles" component={ReportsByApp}/> 
-                <Route path="/reports/data" name="Approves" component={ReportsApproveRecords}/> 
+                <Route path="/reports/transactions" name="Approves" component={Transactions}/> 
                 <Route path="/reports/sambyrole" name="sambyrole" component={SAMByRole}/> 
                 <Route path="/reports/sambybu" name="sambybu" component={SamByBu}/> 
                 <Route path="/reports/sambysbu" name="sambysbu" component={SamBySbu}/> 
@@ -87,7 +87,7 @@ class Full extends Component {
                
                
 
-                <Redirect from="/" to="/dashboard"/>
+                {/* <Redirect from="/" to="/dashboard"/> */}
               </Switch>
             </Container>
           </main>

@@ -12,7 +12,7 @@ const routes = {
   '/masters/samroles':'SAM Role',
   '/samdata':'SAM Data',
   '/approvesamdata':'UnApproved List',
-  '/reports/data':'Approved List',
+  '/reports/transactions':'Transactions',
   '/reports/AppsRoles':'SAM By App',
   '/reports/sambyrole':'SAM By Role',
   '/reports/sambybu':'SAM By BU',

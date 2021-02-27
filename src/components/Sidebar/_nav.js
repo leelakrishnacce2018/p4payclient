@@ -158,11 +158,11 @@ export default {
       name: 'Reports',
       url: '/reports',
       icon: 'fa fa-list',
-      role:'checker',
+      role:'admin',
       children: [
         {
           name: 'Transactions',
-          url: '/reports/data',
+          url: '/reports/transactions',
           icon: 'fa fa-check'
         },
         {

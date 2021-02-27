@@ -1178,6 +1178,20 @@ export function deactiveUser(key){
 
 }
 
+// API'S FOR TRANSACTIONS
+
+
+
+export function getTransactionsBystatus(status) {
+      
+
+    return request({
+        url: API_BASE_URL + "/invoice/invoicesByStatus",
+        method: 'POST',        
+        body: JSON.stringify(status)
+    });
+}
+
 
 export function createUser(buRequest) {
       
