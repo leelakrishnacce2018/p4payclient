@@ -1183,12 +1183,20 @@ export function deactiveUser(key){
 
 
 export function getTransactionsBystatus(status) {
-      
-
     return request({
         url: API_BASE_URL + "/invoice/invoicesByStatus",
         method: 'POST',        
         body: JSON.stringify(status)
+    });
+}
+
+export function updateTransactionStatus(obj) {
+      
+
+    return request({
+        url: API_BASE_URL + "/invoice/invoicePaymentStatus",
+        method: 'PUT',        
+        body: JSON.stringify(obj)
     });
 }
 

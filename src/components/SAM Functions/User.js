@@ -407,7 +407,7 @@ class CustModal extends Component {
         name:"",
         panImg:"",
         selfiImg:"",
-        kycStatus:""
+        kycStatus:"0"
        
       };
 
@@ -670,9 +670,16 @@ class CustModal extends Component {
 
     onUpdate(){
 
+
+      if(this.state.kycStatus == '0'){
+        toast.dismiss()
+        toast.warn('Record Updated Successfully');
+        return false;
+      }
+
       var e = document.getElementById("selectUsers");
       var obj = {
-        remarks: this.state.buName.trim(), //login id
+        remarks: this.state.buName, //login id
         kycStatus: this.state.kycStatus.trim(),      //user role
         id:this.state.buId
       };    
@@ -770,6 +777,7 @@ getActiverecords(){
                                       value={this.state.cunId}
                                       onChange={this.OnKycStatus}
                                     >
+                                      <option value="0">Select</option>
                                       <option value="R">Reject</option>
                                       <option value="A">Approve</option>
               

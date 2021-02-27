@@ -197,7 +197,7 @@ onSubmit(e)  {
         localStorage.setItem("cusrole", response.croles);
         localStorage.setItem("loggedNav",JSON.stringify(this.setNavItems(response.croles)));
        this.props.handler();
-      this.props.history.push("/dashboar")
+      this.props.history.push("/dashboard")
     });
   }
 

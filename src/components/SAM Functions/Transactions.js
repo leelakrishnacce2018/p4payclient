@@ -3,7 +3,7 @@ import {Card, CardHeader, CardBody,Button} from 'reactstrap';
 import {BootstrapTable, TableHeaderColumn,ButtonToolbar} from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 //import SweetAlert from 'react-bootstrap-sweetalert';
-import {  deactiveRecord, updateBu, createBu, getActiveList, getDelBuList, getUserList,getInactiveUserList,deactiveUser,createUser,updateuser, getUsersByFilter, approveUser, getTransactionsBystatus } from '../../util/APIUtils';
+import {  deactiveRecord, updateBu, createBu, getActiveList, getDelBuList, getUserList,getInactiveUserList,deactiveUser,createUser,updateuser, getUsersByFilter, approveUser, getTransactionsBystatus, updateTransactionStatus } from '../../util/APIUtils';
 import { Modal, ModalHeader, ModalBody, ModalFooter,Input,
   Form, FormGroup,
   Label,UncontrolledTooltip } from 'reactstrap';
@@ -176,20 +176,22 @@ class Transactions extends Component {
   cellButton(cell, row, enumObject, rowIndex) {
     return (
       <span>
-      {row.rstatus == '1' ? (
+      {row.rstatus ? (
         <div>
          
       <button className="btn btn-danger" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Disable The Item?')){this.deleteRow(row)}}}><i className="fa fa-trash"></i></button>
       <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Disable</UncontrolledTooltip> 
-      <button className="btn btn-warning"  id={"edit"+rowIndex}  onClick={(e) => this.handleClickEdit(row)}><i className="fa fa-eye"></i></button>
-    
-    <UncontrolledTooltip placement="right" target={"edit"+rowIndex}>view</UncontrolledTooltip>
+      
     
       </div>
   ) : (
     <div>
-    <button className="btn btn-info" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Enable The Item?')){this.deleteRow(row)}}}><i className="fa fa-toggle-on"></i></button>
-    <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Enable</UncontrolledTooltip>
+      <button className="btn btn-warning"  id={"edit"+rowIndex}  onClick={(e) => this.handleClickEdit(row)}><i className="fa fa-eye"></i></button>
+    
+    <UncontrolledTooltip placement="right" target={"edit"+rowIndex}>view</UncontrolledTooltip>
+    {/* <button className="btn btn-info" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Enable The Item?')){this.deleteRow(row)}}}><i className="fa fa-toggle-on"></i></button>
+    <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Enable</UncontrolledTooltip> */}
+    
     </div>
   )}
    
@@ -213,7 +215,7 @@ class Transactions extends Component {
   }
   approveRecord(record){
 
-    console.log("view kyc");
+   // console.log("view kyc");
   }
   
 
@@ -339,8 +341,8 @@ class Transactions extends Component {
           
           {/* <Button className="btn btn-danger" onClick={this.handleClick} id="ADD">ADD</Button>
           <UncontrolledTooltip placement="top" target="ADD">ADD</UncontrolledTooltip> */}
-          <Button className="btn btn-info" onClick={this.showDeletedRecords.bind(this)} id="rList">{this.state.recordsListName}</Button>
-          <UncontrolledTooltip placement="top" target="rList">{this.state.recordsListName}</UncontrolledTooltip>
+          {/* <Button className="btn btn-info" onClick={this.showDeletedRecords.bind(this)} id="rList">{this.state.recordsListName}</Button> 
+          <UncontrolledTooltip placement="top" target="rList">{this.state.recordsListName}</UncontrolledTooltip>  */}
           <select id='selectUsers' onChange={this.onFilterChange} style={{marginLeft:'10px',color:'#151b1e',backgroundColor:'#22f58f',borderColor:'#22f58f',display:'inline-block',marginBottom:'10px',border:'1px solid transparent',borderRadius:'0.25rem',lineHeight:'1.5',padding:'0.375rem 0.75rem',textAlign:'center',verticalAlign:'middle'}}>
             <option value="Success">Success</option>
             <option value="FAILED">Failed</option>
@@ -348,6 +350,7 @@ class Transactions extends Component {
             <option  value="Pending">Pending</option>
             <option  value="USERCANCELLED">User Cancelled</option>
             <option  value="TRANSFERRED">Transferred</option>
+            <option value="OnHold">OnHold</option>
 
           </select>
 
@@ -374,6 +377,8 @@ class Transactions extends Component {
            <TableHeaderColumn isKey dataField="id"  dataFormat={this.priceFormatter.bind(this)}  export={false}>S.No</TableHeaderColumn>
             <TableHeaderColumn dataField="name" csvHeader='Name' filter={ { type: 'TextFilter', delay: 1000 } } dataSort  tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >Name</TableHeaderColumn> 
             <TableHeaderColumn dataField="mobileNumber" csvHeader='Mobile' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Mobile</TableHeaderColumn>  
+            <TableHeaderColumn dataField="date" csvHeader='Date' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Date</TableHeaderColumn>  
+
             <TableHeaderColumn dataField="amount" csvHeader='amount' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Amount</TableHeaderColumn>  
             <TableHeaderColumn dataField="charges" csvHeader='charges' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Charges</TableHeaderColumn>  
 
@@ -407,21 +412,17 @@ class CustModal extends Component {
         name:"",
         panImg:"",
         selfiImg:"",
-        kycStatus:""
+        kycStatus:"0",
+        bankAccount:'',
+        ifsc:""
        
       };
 
       this.onBuName = this.onBuName.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
-      this.onSbuId = this.onSbuId.bind(this);
-      this.blurBuname = this.blurBuname.bind(this);
-      this.blurSbuId = this.blurSbuId.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);    
       this.onPaste = this.onPaste.bind(this);
-      this.onLastName = this.onLastName.bind(this);
-      this.onFirstName = this.onFirstName.bind(this);
+     
 
-      this.blurFirstName = this.blurFirstName.bind(this);
-      this.blurLastName = this.blurLastName.bind(this);
       this.OnKycStatus =this.OnKycStatus.bind(this);
 
       
@@ -441,57 +442,20 @@ class CustModal extends Component {
      }
 
      OnKycStatus(e) {
-      //console.log("on sbu"+e.value);
+      //console.log("on sbu"+e.target.value);
       this.setState({
         kycStatus: e.target.value
       });
     }
- 
+    onBuName(e){
+      this.setState({
+        buName: e.target.value
+      });
+
+    }
     
 
-    blurBuname(e) {
-      var value =e.target.value.trim();
-      if(!value){
-        this.setState({
-          borderColor:colordboarder
-      });
-      document.getElementById("ctryError").textContent = "Enter Name";     
-
-      } else  {
-        this.setState({
-          borderColor:defaultboarder
-       
-      });
-      document.getElementById("ctryError").textContent = "";     
-
-      }    
-       
-     }
-
-     blurSbuId(e) {
-      var value =e.target.value;
-
-      if( value == '0')
-      {
-        this.setState({
-          borderColorsbu:colordboarder
-          
-        
-      });
-      document.getElementById("sbuError").textContent = "Select User Role";
-      
      
-      } else{
-        this.setState({
-          borderColorsbu:defaultboarder             
-      });
-      document.getElementById("sbuError").textContent = "";
-
-      }
-
-     }
-
-
     componentDidMount() { 
       // console.log(this.props.editFlag);
    
@@ -502,12 +466,14 @@ class CustModal extends Component {
            //console.log("edit record"+this.props.inputrecord);
 
        this.setState({
-            buName: this.props.inputrecord.exRole,
-            buId: this.props.inputrecord.id,
+            name: this.props.inputrecord.payeeDetails.name,
+            buId: this.props.inputrecord.invoiceNumber,
             sbuId: this.props.inputrecord.interRole,
             panImg:this.props.inputrecord.panStr,
             selfiImg:this.props.inputrecord.selfyStr,
-            name:this.props.inputrecord.name
+           // name:this.props.inputrecord.name,
+            bankAccount:this.props.inputrecord.payeeDetails.bankAccount,
+            ifsc:this.props.inputrecord.payeeDetails.ifsc
         });
         
    }else{
@@ -521,166 +487,33 @@ class CustModal extends Component {
 
 
     
-      onBuName(e) {
-     
-     
-      this.setState({
-        buName: e.target.value
-      });
-    
-    }
-
     
     
-    onSbuId(e) {
-      // console.log("on sbu"+e.value);
-       this.setState({
-         sbuId: e.target.value
-       });
-     }
-     onFirstName(e) {
-      //console.log("on sbu"+e.value);
-      this.setState({
-        firstName: e.target.value
-      });
-    }
-
-    onLastName(e) {
-      //console.log("on sbu"+e.value);
-      this.setState({
-        lastName: e.target.value
-      });
-    }
-
-
-    //blr actions
-
-    blurFirstName(e) {
-      
-      var value =e.target.value.trim();
-
-      if( !value)
-      {
-        document.getElementById("firstName").style.borderColor = "red";
-        document.getElementById("firstNameError").textContent = "Enter First name";
-      
-
-      } 
-     
     
-      else{
-      document.getElementById("firstName").style.borderColor = "#e4e6eb";
-      document.getElementById("firstNameError").textContent = "";
-
-      }
-
-      
+    
+    
        
-     }
-     blurLastName(e) {
-      
-      var value =e.target.value.trim();
-
-      if( !value)
-      {
-        document.getElementById("lastName").style.borderColor = "red";
-        document.getElementById("lastNameError").textContent = "Enter Last name";
-      
-
-      } 
-     
-    
-      else{
-      document.getElementById("lastName").style.borderColor = "#e4e6eb";
-      document.getElementById("lastNameError").textContent = "";
-
-      }
-
-      
-       
-     }
-    
-    
-   
     
 
-    formValidate(obj){
-
-      if(!obj.name){
-        this.setState({
-          borderColor:colordboarder
-      });
-      document.getElementById("ctryError").textContent = "Enter User LoginId";     
-
-      }  else  {
-        this.setState({
-          borderColor:defaultboarder
-       
-      });
-      document.getElementById("ctryError").textContent = "";     
-
-      }
-      if(obj.interRole == '0'){
-        this.setState({
-          borderColorsbu:colordboarder
-      });
-      document.getElementById("sbuError").textContent = "Select User Role";
-      
-
-      } else{
-        this.setState({
-          borderColorsbu:defaultboarder
-      });
-
-        document.getElementById("sbuError").textContent = "";
-
-      }   
-
-      if(!obj.mobileNumber){
-        document.getElementById("firstName").style.borderColor = "red";
-      document.getElementById("firstNameError").textContent = "Enter First name";     
-
-      }  else  {
-        document.getElementById("firstName").style.borderColor = "#e4e6eb";
-      document.getElementById("firstNameError").textContent = "";     
-
-      }
-
-      if(!obj.email){
-        document.getElementById("lastName").style.borderColor = "red";
-        document.getElementById("lastNameError").textContent = "Enter Last name";     
-  
-        }  else  {
-          document.getElementById("lastName").style.borderColor = "#e4e6eb";
-        document.getElementById("lastNameError").textContent = "";     
-  
-        }
-
-     
-      if(obj.name =="" || obj.exRole == 'undefined'   || obj.interRole == '0' || obj.email.length < 1 || obj.mobileNumber.length < 1){
-       
-        return false;
-      }else
-        {
-        return true
-      }
-
-    }
-
+    
 
     onUpdate(){
 
-      var e = document.getElementById("selectUsers");
+      if(this.state.kycStatus == '0'){
+        toast.dismiss()
+        toast.warn('Please select PaymentStatus');
+        return false;
+      }
       var obj = {
-        remarks: this.state.buName.trim(), //login id
-        kycStatus: this.state.kycStatus.trim(),      //user role
-        id:this.state.buId
+        remarks: this.state.buName, //login id
+        paymentStatus: this.state.kycStatus,      //user role
+        invoiceNumber:this.state.buId
       };    
 
         
      // console.log("Update Method Clicked");   
-     // console.log(obj);         
-     approveUser(obj)
+    // console.log(obj);         
+     updateTransactionStatus(obj)
       .then(response => {               
         // console.log("rsponse"+response); 
         toast.dismiss()
@@ -738,41 +571,40 @@ getActiverecords(){
         <Card>
           
               <CardHeader className="carheaderSmall">
-                <strong>Users</strong> 
+                <strong>Payee Details</strong> 
               </CardHeader>
               <CardBody>
               <form>
                   <div className="form-group row">
                      <label htmlFor="staticEmail" className="col-sm-3 col-form-label">Name</label>
                   <div className="col-sm-8">
-                     <input type="text" readOnly className="form-control-plaintext" id="staticEmail" value={this.state.name}/>
+                     <input type="text" id='name' readOnly className="form-control"   value={this.state.name}/>
                    </div>
                    </div>
                           <div className="form-group row">
-                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">Pancard</label>
+                            <label  className="col-sm-3 col-form-label">Account No.</label>
                             <div className="col-sm-8">
-                            <a download="FILENAME.png" href={"data:image/png;base64,"+this.state.panImg}>Download</a>
+                            <input type="text" id='accountNo' readOnly className="form-control"   value={this.state.bankAccount}/>                            </div>
+                          </div>
+                          <div className="form-group row">
+                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">IFSC Code</label>
+                            <div className="col-sm-8">
+                            <input type="text" id='ifscCode' readOnly  className="form-control"   value={this.state.ifsc}/>
                             </div>
                           </div>
                           <div className="form-group row">
-                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">Selfi Pic</label>
-                            <div className="col-sm-8">
-                            <a download="FILENAME.png" href={"data:image/png;base64,"+this.state.selfiImg}>Download</a>
-                            </div>
-                          </div>
-                          <div className="form-group row">
-                            <label htmlFor="inputPassword" className="col-sm-3 col-form-label">KYC Status</label>
+                            <label htmlFor="paymentStatus" className="col-sm-3 col-form-label">Payment Status</label>
                             <div className="col-sm-8">
                             <Input
                                       type="select"
                                       name="select"
                                       id="kycStatus"
-                                      value={this.state.cunId}
+                                      value={this.state.kycStatus}
                                       onChange={this.OnKycStatus}
                                     >
-                                      <option value="R">Reject</option>
-                                      <option value="A">Approve</option>
-              
+                                    <option  value="0">select</option>
+                                     <option  value="TRANSFERRED">Transferred</option>
+                                    <option value="OnHold">OnHold</option>           
             </Input>
                             </div>
                           </div>
