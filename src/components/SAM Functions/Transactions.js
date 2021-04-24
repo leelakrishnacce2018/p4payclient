@@ -176,19 +176,19 @@ class Transactions extends Component {
   cellButton(cell, row, enumObject, rowIndex) {
     return (
       <span>
-      {row.rstatus ? (
+      { true ? (
         <div>
-         
-      <button className="btn btn-danger" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Disable The Item?')){this.deleteRow(row)}}}><i className="fa fa-trash"></i></button>
-      <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Disable</UncontrolledTooltip> 
-      
+
+<button className="btn btn-warning"  id={"edit"+rowIndex}  onClick={(e) => this.handleClickEdit(row)}><i className="fa fa-eye"></i></button>
     
+    <UncontrolledTooltip placement="right" target={"edit"+rowIndex}>view</UncontrolledTooltip>
       </div>
   ) : (
     <div>
-      <button className="btn btn-warning"  id={"edit"+rowIndex}  onClick={(e) => this.handleClickEdit(row)}><i className="fa fa-eye"></i></button>
-    
-    <UncontrolledTooltip placement="right" target={"edit"+rowIndex}>view</UncontrolledTooltip>
+      <button className="btn btn-danger" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Disable The Item?')){this.deleteRow(row)}}}><i className="fa fa-trash"></i></button>
+      <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Disable</UncontrolledTooltip> 
+      
+     
     {/* <button className="btn btn-info" id={"delete"+rowIndex}  onClick={() => {if(window.confirm('Enable The Item?')){this.deleteRow(row)}}}><i className="fa fa-toggle-on"></i></button>
     <UncontrolledTooltip placement="left" target={"delete"+rowIndex}>Enable</UncontrolledTooltip> */}
     
@@ -375,9 +375,9 @@ class Transactions extends Component {
         
          exportCSV >
            <TableHeaderColumn isKey dataField="id"  dataFormat={this.priceFormatter.bind(this)}  export={false}>S.No</TableHeaderColumn>
-            <TableHeaderColumn dataField="name" csvHeader='Name' filter={ { type: 'TextFilter', delay: 1000 } } dataSort  tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >Name</TableHeaderColumn> 
+            <TableHeaderColumn dataField="userName" csvHeader='userName' filter={ { type: 'TextFilter', delay: 1000 } } dataSort  tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }} >Name</TableHeaderColumn> 
             <TableHeaderColumn dataField="mobileNumber" csvHeader='Mobile' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Mobile</TableHeaderColumn>  
-            <TableHeaderColumn dataField="date" csvHeader='Date' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Date</TableHeaderColumn>  
+            <TableHeaderColumn dataField="invoiceDate" csvHeader='Date' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Date</TableHeaderColumn>  
 
             <TableHeaderColumn dataField="amount" csvHeader='amount' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Amount</TableHeaderColumn>  
             <TableHeaderColumn dataField="charges" csvHeader='charges' filter={ { type: 'TextFilter', delay: 1000 } } dataSort tdStyle={ { whiteSpace: 'normal' } } thStyle={ { whiteSpace: 'normal' }}   >Charges</TableHeaderColumn>  
@@ -414,8 +414,8 @@ class CustModal extends Component {
         selfiImg:"",
         kycStatus:"0",
         bankAccount:'',
-        ifsc:""
-       
+        ifsc:"",
+        paymentStatus:""
       };
 
       this.onBuName = this.onBuName.bind(this);
@@ -453,6 +453,7 @@ class CustModal extends Component {
       });
 
     }
+   
     
 
      
@@ -463,7 +464,7 @@ class CustModal extends Component {
 
        if(this.props.editFlag)
        {
-           //console.log("edit record"+this.props.inputrecord);
+           console.log("edit record"+this.props.inputrecord);
 
        this.setState({
             name: this.props.inputrecord.payeeDetails.name,
@@ -473,7 +474,8 @@ class CustModal extends Component {
             selfiImg:this.props.inputrecord.selfyStr,
            // name:this.props.inputrecord.name,
             bankAccount:this.props.inputrecord.payeeDetails.bankAccount,
-            ifsc:this.props.inputrecord.payeeDetails.ifsc
+            ifsc:this.props.inputrecord.payeeDetails.ifsc,
+            paymentStatus:this.props.inputrecord.paymentStatus
         });
         
    }else{
@@ -499,6 +501,8 @@ class CustModal extends Component {
 
     onUpdate(){
 
+      var switchValue = document.getElementById("autotransfer");  
+
       if(this.state.kycStatus == '0'){
         toast.dismiss()
         toast.warn('Please select PaymentStatus');
@@ -507,7 +511,8 @@ class CustModal extends Component {
       var obj = {
         remarks: this.state.buName, //login id
         paymentStatus: this.state.kycStatus,      //user role
-        invoiceNumber:this.state.buId
+        invoiceNumber:this.state.buId,
+        autoTransfer:switchValue.checked
       };    
 
         
@@ -530,6 +535,7 @@ class CustModal extends Component {
     event.preventDefault();   
   
     
+
     var obj = {
       name: this.state.buName.trim(), //login id
      // interRole: this.state.sbuId,      //user role
@@ -592,6 +598,7 @@ getActiverecords(){
                             <input type="text" id='ifscCode' readOnly  className="form-control"   value={this.state.ifsc}/>
                             </div>
                           </div>
+                          {this.state.paymentStatus != 'success' ?  null : (
                           <div className="form-group row">
                             <label htmlFor="paymentStatus" className="col-sm-3 col-form-label">Payment Status</label>
                             <div className="col-sm-8">
@@ -607,13 +614,26 @@ getActiverecords(){
                                     <option value="OnHold">OnHold</option>           
             </Input>
                             </div>
-                          </div>
+                          </div> )}
+                          {this.state.paymentStatus != 'success' ?  null : (
                           <div className="form-group row">
                             <label htmlFor="inputPassword" className="col-sm-3 col-form-label">Remarks</label>
                             <div className="col-sm-8">
                             <input type="text" id='remarks' className="form-control"  onChange={this.onBuName} value={this.state.buName}/>
                             </div>
-                          </div>
+                          </div> )}
+                          {this.state.paymentStatus != 'success' ?  null : (
+                          <div className="form-group row">
+                     <label htmlFor="staticEmail" className="col-sm-3 col-form-label">AutoTransfer</label>
+                  <div className="col-sm-8">
+                  <Label className="switch switch-3d switch-danger">
+                  <Input type="checkbox" id='autotransfer'  className="switch-input" />
+                  <span className="switch-label"></span>
+                  <span className="switch-handle"></span>
+                </Label>
+                   </div>
+                   </div> )}
+                         
                         </form>
 
              </CardBody>

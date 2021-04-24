@@ -1,9 +1,7 @@
-import SamBU from "./components/SAM Functions/SamBu";
-
 const routes = {
   '/': 'Home',
   '/dashboard': 'Dashboard',
-  '/masters/country':'Country',
+  '/masters/search':'search',
   '/masters/samsbu':'SBU',
   '/masters/sambu':'BU',
   '/masters/user':'Users',

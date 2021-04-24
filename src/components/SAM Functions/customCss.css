@@ -8,7 +8,8 @@
     text-align: center;
   }
   .carheaderSmall{
-    background-color: #a0e418 !important;
+    background-color: #383e4b !important;
+    color: #FFFFFF !important;
   }
 
   .btn-danger{
@@ -26,8 +27,8 @@
     margin-bottom: 10px; 
   }
   .pagination li.active a {
-    background-color: #a0e418 !important;
-    border-color: #a0e418 !important;
+    background-color: #383e4b !important;
+    border-color: #383e4b !important;
   }
 
   .btn-danger:focus, .btn-danger.focus {
@@ -45,8 +46,8 @@
 }
 
 .pagination li.active a {
-  background-color: #a0e418 !important;
-  border-color: #a0e418 !important;
+  background-color: #383e4b !important;
+  border-color: #383e4b !important;
 }
 
 .btn-danger:focus, .btn-danger.focus {

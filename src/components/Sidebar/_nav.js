@@ -125,23 +125,7 @@ export default {
         attributes: {}
       },
       role:'maker'
-    },    
-   
-    {
-      name: 'Masters',
-      url: '/masters',
-      icon: 'fa fa-list',
-      role:'maker',
-      children: [        
-        {
-          name: 'User Privileges',
-          url: '/masters/user',
-          icon: 'fa fa-key'
-        },
-        
-      ]
-    },
-    
+    },   
     {
       divider: true,
       role:'maker'
@@ -155,6 +139,13 @@ export default {
      
     },
     {
+      role:'admin',
+      name: 'Search',
+      url: '/masters/search',
+      icon: 'fa fa-key'
+     
+    },
+    {
       name: 'Reports',
       url: '/reports',
       icon: 'fa fa-list',
@@ -164,16 +155,6 @@ export default {
           name: 'Transactions',
           url: '/reports/transactions',
           icon: 'fa fa-check'
-        },
-        {
-          name: 'Pending Transactions',
-          url: '/reports/AppsRoles',
-          icon: 'fa fa-podcast'
-        },
-        {
-          name: 'Failed Transactions',
-          url: '/reports/sambyrole',
-          icon: 'fa fa-podcast'
         }
       ]
     }

@@ -45,7 +45,7 @@ class Header extends Component {
         <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>
           <span className="navbar-toggler-icon"></span>
         </NavbarToggler>
-        <Nav className="d-md-down-none" navbar>P4 Systems
+        <Nav style={{color:'#FFFFFF'}}>P4 Systems
          {/* <NavItem className="px-3">
             <NavLink href="#">Dashboard</NavLink>
           </NavItem>

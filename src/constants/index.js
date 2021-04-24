@@ -1,5 +1,5 @@
 
-export const API_BASE_URL = 'http://localhost:8091/api';
+export const API_BASE_URL = 'http://localhost:8093/api';
 
 //export const API_BASE_URL = location.protocol+'//'+location.host+'/api'
 
@@ -14,7 +14,7 @@ export const ACCESS_TOKEN = 'accessToken';
 export const crole = '';
 
 
- export const POLL_LIST_SIZE = 30;
+export const POLL_LIST_SIZE = 30;
 export const MAX_CHOICES = 6;
 export const POLL_QUESTION_MAX_LENGTH = 140;
 export const POLL_CHOICE_MAX_LENGTH = 40;

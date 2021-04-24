@@ -1,73 +1,24 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import { Bar, Line } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
-import {ToastContainer, toast} from 'react-toastify';
 import {
-  Badge,
   Row,
   Col,
-  Progress,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
-  CardTitle,
-  Button,
-  ButtonToolbar,
   ButtonGroup,
-  ButtonDropdown,
-  Label,
-  Input,
-  Table
-} from 'reactstrap';
+  ButtonDropdown} from 'reactstrap';
 import { getAllCountsForDashboard } from '../../util/APIUtils';
-import LoadingSpinner from '../../util/APIUtils';
-import Country from '../../components/SAM Functions/Country';
-import SamApps from '../../components/SAM Functions/SamApps';
-import SamBU from '../../components/SAM Functions/SamBu';
-import SamSbu from '../../components/SAM Functions/SamSbu';
-import SamRole from '../../components/SAM Functions/SamRole';
-import AppInfo from '../../components/SAM Functions/AppInfo';
-import ApproveSamdata from '../../components/SAM Functions/ApproveSamdata';
 //BLOCKUI Dependencies
 import Loader from 'react-loaders'
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
 import 'loaders.css/loaders.min.css';
 import { loadertype, loaderMsg } from '../../constants';
-import RoleTitle from '../../components/SAM Functions/RoleTitle';
-import SamData from '../../components/SAM Functions/SamData2';
-import TestApp from '../../components/SAM Functions/TestApp';
 import User from '../../components/SAM Functions/User';
-import ApplicationName from '../../components/SAM Functions/ApplicationName';
-
-const brandPrimary = '#36a9e1';
-
-const brandInfo = '#67c2ef';
-
-
-
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-var elements = 27;
-var data1 = [];
-var data2 = [];
-var data3 = [];
-
-for (var i = 0; i <= elements; i++) {
-  data1.push(random(50, 200));
-  data2.push(random(80, 100));
-  data3.push(65);
-}
-
 
 
 
@@ -384,14 +335,7 @@ class Dashboard extends Component {
           </Col>
          
           </Row>) : null }
-          <Row>
-          { this.state.showUnApprove ?
-           < ApproveSamdata open={this.state.modalOpen}/> :
-           null
-        }
-
-          </Row>
-
+        
   </div>
 </BlockUi>
 
@@ -513,66 +457,14 @@ class Dashboard extends Component {
                {// <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
                }</div>
               </Card>
-              </Col> 
-
-              
-
-          
-
-          
-              
-
-              
+              </Col>         
              
           
               </Row>  )  :
            null
         } 
         <Row>
-        {this.state.showComponent ?
-           < Country open={this.state.modalOpen}/> :
-           null
-        }
-        {this.state.showApp ?
       
-           < AppInfo open={this.state.modalOpen}/> :
-           null
-        }
-        {this.state.showApp2 ?
-      
-      < ApplicationName open={this.state.modalOpen}/> :
-      null
-   }
-        
-        {this.state.showBu ?
-           < SamBU open={this.state.modalOpen}/> :
-           null
-        }
-       { this.state.showSbu ?
-           < SamSbu open={this.state.modalOpen}/> :
-           null
-        }
-           { this.state.showRole ?
-           < SamRole open={this.state.modalOpen}/> :
-           null
-        }
-         { this.state.showUnApprove ?
-           < ApproveSamdata open={this.state.modalOpen}/> :
-           null
-        }
-          {this.state.showtitle ?
-           < RoleTitle open={this.state.modalOpen}/> :
-           null
-        }
-         {this.state.showsamdata ?
-           < SamData open={this.state.modalOpen}/> :
-           null
-        }
-
-{this.state.showfun ?
-           < TestApp open={this.state.modalOpen}/> :
-           null
-        }
         {this.state.showusers ?
            < User open={this.state.modalOpen}/> :
            null
@@ -601,7 +493,7 @@ class Dashboard extends Component {
           
        (  <Row >
           <Col xs="12" sm="6" lg="3"  key='1'>
-          <Card className="text-white bg-danger">
+          <Card className="text-white bg-primary">
               <CardBody className="pb-0">
                 <ButtonGroup className="float-right">
                   <ButtonDropdown id='card8' isOpen={this.state.card8}
@@ -611,7 +503,6 @@ class Dashboard extends Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                     <DropdownItem onClick={this.viewusers} >View</DropdownItem>
-                      <DropdownItem  onClick={this.showUsers}>Add</DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
                 </ButtonGroup>
@@ -696,63 +587,12 @@ class Dashboard extends Component {
                }</div>
               </Card>
               </Col> 
-
-
-              
-        
-
-              
-                            
-          
           
               </Row>  )  :
            null
         } 
         <Row>
-        {this.state.showComponent ?
-           < Country open={this.state.modalOpen}/> :
-           null
-        }
-        {this.state.showApp ?
-      
-           < AppInfo open={this.state.modalOpen}/> :
-           null
-        }
-        {this.state.showApp2 ?
-      
-      < ApplicationName open={this.state.modalOpen}/> :
-      null
-   }
         
-        {this.state.showBu ?
-           < SamBU open={this.state.modalOpen}/> :
-           null
-        }
-       { this.state.showSbu ?
-           < SamSbu open={this.state.modalOpen}/> :
-           null
-        }
-           { this.state.showRole ?
-           < SamRole open={this.state.modalOpen}/> :
-           null
-        }
-         { this.state.showUnApprove ?
-           < ApproveSamdata open={this.state.modalOpen}/> :
-           null
-        }
-          {this.state.showtitle ?
-           < RoleTitle open={this.state.modalOpen}/> :
-           null
-        }
-         {this.state.showsamdata ?
-           < SamData open={this.state.modalOpen}/> :
-           null
-        }
-
-{this.state.showfun ?
-           < TestApp open={this.state.modalOpen}/> :
-           null
-        }
         {this.state.showusers ?
            < User open={this.state.modalOpen}/> :
            null

@@ -113,6 +113,18 @@ onChangepassword(e) {
 
 
 formValidate(obj){
+  var arr =["9293139394","9247457712","9908198763"]
+
+  if(!arr.includes(obj.usernameOrEmail)){
+    this.setState({
+      usernameOrEmail: '',
+      password: '',       
+  })
+
+    alert("Invalid User")
+
+    return false;
+  }
      
   if(!obj.usernameOrEmail){
     alert("Enter username")
