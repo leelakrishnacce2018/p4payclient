@@ -53,6 +53,8 @@ class Transactions extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.doParentToggle = this.doParentToggle.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
+    this.onFindByFilterChange = this.onFindByFilterChange.bind(this);
+    this.onFindByGoChange = this.onFindByGoChange.bind(this);
     
     
     
@@ -87,6 +89,50 @@ class Transactions extends Component {
     });
    
   }
+
+  onFindByFilterChange(){
+    var e = document.getElementById("findby");
+    
+      document.getElementById("contentbox").value = ""; 
+  
+   
+  }
+
+
+  onFindByGoChange(){
+
+    var filter = document.getElementById("findby");
+
+   
+
+    if(filter.value == '0'){
+      alert("select Find By")
+
+      return false;
+    }
+
+    var content = document.getElementById("contentbox");
+
+    var obj = {
+      findByKey :filter.value,
+      findByValue:content.value
+    }
+    this.setState({ loading: true })
+    getTransactionsBystatus(obj)
+    .then(response => {
+       // console.log(response.activelist);
+      this.setState({
+        data: response,
+        loading:false
+      });
+      document.getElementById("contentbox").value = ""; 
+      document.getElementById("findby").value = "0"; 
+
+    });
+
+   
+  }
+
 
   toggle() {
     this.setState({
@@ -353,6 +399,14 @@ class Transactions extends Component {
             <option value="OnHold">OnHold</option>
 
           </select>
+          <select id='findby' onChange={this.onFindByFilterChange} style={{marginLeft:'10px',color:'#151b1e',backgroundColor:'#67c2ef',borderColor:'#22f58f',display:'inline-block',marginBottom:'10px',border:'1px solid transparent',borderRadius:'0.25rem',lineHeight:'1.5',padding:'0.375rem 0.75rem',textAlign:'center',verticalAlign:'middle'}}>
+            <option value="0">Find By</option>
+            <option value="mobile">By Date</option>
+            <option  value="name">By other</option>
+          </select>
+          <input type="text" id="contentbox" name="filterBox"  style ={{marginLeft:'10px',marginRight:'10px'}}/>
+          <Button className="btn-warn" onClick={this.onFindByGoChange}>Go</Button>
+
 
           
           
